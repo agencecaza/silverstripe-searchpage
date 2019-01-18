@@ -6,4 +6,4 @@ fr:
     YOUSEARCHED: 'Vous avez cherché'
     NEWSEARCH: 'Nouvelle recherche'
     JOBCANTDOACTION: "Vous ne pouvez pas faire cette opération. Vous devez être connecté comme administrateur."
-    JOBDONE: "L'indexation de Title et Content à l'intérieur de ContentSearch est terminé.";
+    JOBDONE: "L'indexation de Title et Content à l'intérieur de ContentSearch est terminé."
