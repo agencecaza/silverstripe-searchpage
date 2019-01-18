@@ -21,6 +21,28 @@ class SearchPageController extends PageController {
 		'SearchForm'
 	);
 
+	
+	
+	protected function init()
+	{
+		parent::init();
+
+		if (isset($_GET['job']) == 'indexcontent') {
+			$pages = Page::get();
+			foreach ($pages as $page) {
+				$page->ContentSearch = $page->Title." ".$page->MenuTitle." ".$page->Content;
+				$page->write();
+				$page->publish('Stage', 'Live');
+			}
+				
+			echo "index done!!!"; exit;
+				
+		}
+
+	}
+
+	
+	
 	public function SearchForm() {
 
 		$form = Form::create(
@@ -81,13 +103,13 @@ class SearchPageController extends PageController {
 		$resultslist = $results->sort('Rank')->reverse();
 
 		$paginatedProperties = PaginatedList::create(
-        $resultslist,
-        $this->getRequest()
-    )->setPageLength(25);
+       		$resultslist,
+       		$this->getRequest()
+    		)->setPageLength(25);
 
-    return array (
-        'Results' => $paginatedProperties
-    );
+    		return array (
+       			'Results' => $paginatedProperties
+    		);
 
 	}
 
