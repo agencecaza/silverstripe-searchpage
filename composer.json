@@ -1,0 +1,24 @@
+{
+    "name": "intwebg/silverstripe-searchpage",
+    "description": "Simple search engine",
+    "type": "silverstripe-vendormodule",
+    "keywords": ["silverstripe", "search"],
+	  "license": "BSD-3-Clause",
+    "authors": [
+    {
+        "name": "Stéphane Guevremont",
+        "email": "stephane.guevremont@gmail.com"
+    }],
+    "require": {
+        "silverstripe/cms": "^4",
+        "silverstripe/framework": "^4"
+    },
+    "autoload": {
+      "psr-4": {
+          "intwebg\\searchpage\\": "src/"
+      }
+    },
+    "extra": {
+      "installer-name": "searchpage"
+    }
+}
