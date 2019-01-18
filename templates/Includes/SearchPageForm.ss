@@ -14,17 +14,15 @@
 
   <% if $Results.MoreThanOnePage %>
   	<div class="pagination">
-			<ul>
         <% if $Results.NotFirstPage %>
-          <li><a href="$Results.PrevLink"> &#60; </a></li>
+          <a href="$Results.PrevLink"> &#60; </a>
         <% end_if %>
           <% loop $Results.Pages %>
-          	<li <% if $CurrentBool %>class="active"<% end_if %>><a href="$Link">$PageNum</a></li>
+          	<a href="$Link" <% if $CurrentBool %>class="current"<% end_if %>>$PageNum</a>
           <% end_loop %>
         <% if $Results.NotLastPage %>
-            <li><a href="$Results.NextLink"> &#62; </a></li>
+            <a href="$Results.NextLink"> &#62; </a>
         <% end_if %>
-			</ul>
     </div>
   <% end_if %>
 
