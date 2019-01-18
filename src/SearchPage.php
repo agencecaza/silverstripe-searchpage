@@ -11,7 +11,7 @@ use SilverStripe\ORM\PaginatedList;
 
 class SearchPage extends Page {
 
-	private static $description = 'Scearch page';
+	private static $description = 'Search page';
 
 }
 
