@@ -4,7 +4,7 @@
 
 <% if not Keywords %>
 
-  <p><%t SearchPage.YOUSEARCHED 'You searched' %>: '$KeywordsGet'</p>
+  <p><%t SearchPage.YOUSEARCHED 'You searched' %>: <span class="keywords">'$KeywordsGet'</span></p>
 
   <a class="searchlink" href="$Link"><%t SearchPage.NEWSEARCH 'New search' %></a>
   <% if Results %>
