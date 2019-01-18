@@ -8,7 +8,7 @@ use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\ORM\PaginatedList;
 use SilverStripe\Versioned\Versioned;
-SilverStripe\Security\Member
+use SilverStripe\Security\Member;
 
 class SearchPage extends Page {
 
