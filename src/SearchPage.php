@@ -27,18 +27,21 @@ class SearchPageController extends PageController {
 	{
 		parent::init();
 
-		if (isset($_GET['job']) == 'indexcontent') {
-			$pages = Page::get();
-			foreach ($pages as $page) {
-				$page->ContentSearch = $page->Title." ".$page->MenuTitle." ".$page->Content;
-				$page->write();
-				$page->publish('Stage', 'Live');
+		if (Member::currentUser() && Member::currentUser()->inGroup(2)) {
+			if (isset($_GET['job']) == 'indexcontent') {
+				$pages = Page::get();
+				foreach ($pages as $page) {
+					$page->ContentSearch = $page->Title." ".$page->MenuTitle." ".$page->Content;
+					$page->write();
+					$page->publish('Stage', 'Live');
+				}
+				echo _t('SearchPage.JOBDONE',"The index Title and Content inside ContentSearch is done.");
+				exit;
 			}
-				
-			echo "index done!!!"; exit;
-				
+		} else {
+			echo _t('SearchPage.JOBCANTDOACTION',"You can't do this operation. You must be loggued as administrator.");
+			exit;
 		}
-
 	}
 
 	
