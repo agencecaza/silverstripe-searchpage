@@ -6,10 +6,10 @@
 
   <p><%t SearchPage.YOUSEARCHED 'You searched' %>: '$KeywordsGet'</p>
 
-  <a href="$Link"><%t SearchPage.NEWSEARCH 'New search' %></a>
+  <a class="searchlink" href="$Link"><%t SearchPage.NEWSEARCH 'New search' %></a>
 
   <% loop Results %>
-    <p><a href="$Link">$Pos – $Title ($Rank)</a></p>
+    <p><a href="$Link"><span class="pos">$Pos</span>$Title <span class="rank">$Rank</span></a></p>
   <% end_loop %>
 
   <% if $Results.MoreThanOnePage %>
