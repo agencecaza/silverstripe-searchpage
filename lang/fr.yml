@@ -1,7 +1,7 @@
 fr:
   SearchPage:
     DESCRIPTION: 'Page recherche'
-    KEYWORDS: 'Mots clés'
-    SEARCH: 'Rechercher...'
+    KEYWORDS: 'Mots clés...'
+    SEARCH: 'Rechercher'
     YOUSEARCHED: 'Vous avez cherché'
     NEWSEARCH: 'Nouvelle recherche'
