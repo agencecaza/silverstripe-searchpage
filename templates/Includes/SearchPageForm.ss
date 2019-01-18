@@ -13,7 +13,7 @@
   <% end_loop %>
 
   <% if $Results.MoreThanOnePage %>
-  	<div class="pagination">
+  	<div id="pagination">
         <% if $Results.NotFirstPage %>
           <a href="$Results.PrevLink"> &#60; </a>
         <% end_if %>
