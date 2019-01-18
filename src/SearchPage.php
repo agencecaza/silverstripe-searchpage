@@ -7,7 +7,8 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\ORM\PaginatedList;
-
+use SilverStripe\Versioned\Versioned;
+SilverStripe\Security\Member
 
 class SearchPage extends Page {
 
@@ -80,7 +81,7 @@ class SearchPageController extends PageController {
 		$results = new ArrayList();
 
 		$array = array( 'ContentSearch:PartialMatch' => $partialmatchArray );
-		$pages = Page::get()->filter( $array );
+		$pages = Versioned::get_by_stage('Page','Live')->filter( $array );
 
 		foreach ($pages as $page) {
 
