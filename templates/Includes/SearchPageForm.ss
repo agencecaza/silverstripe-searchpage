@@ -7,11 +7,14 @@
   <p><%t SearchPage.YOUSEARCHED 'You searched' %>: '$KeywordsGet'</p>
 
   <a class="searchlink" href="$Link"><%t SearchPage.NEWSEARCH 'New search' %></a>
-
-  <% loop Results %>
-    <p><a href="$Link"><span class="pos">$Pos</span>$Title <span class="rank">$Rank</span></a></p>
-  <% end_loop %>
-
+  <% if Results %>
+    <div class="results">
+      <% loop Results %>
+        <p><a href="$Link"><span class="pos">$Pos</span>$Title <span class="rank">$Rank</span></a></p>
+      <% end_loop %>
+    </div>
+  <% end_if %>
+  
   <% if $Results.MoreThanOnePage %>
   	<div id="pagination">
         <% if $Results.NotFirstPage %>
