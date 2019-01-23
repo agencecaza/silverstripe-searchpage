@@ -80,6 +80,8 @@ class SearchPageController extends PageController {
 
 		$results = new ArrayList();
 
+		
+		
 		$array = array( 'ContentSearch:PartialMatch' => $partialmatchArray );
 		$pages = Versioned::get_by_stage('Page','Live')->filter( $array );
 
@@ -91,7 +93,12 @@ class SearchPageController extends PageController {
 				if (stripos($page->ContentSearch, $string) !== false) {
 					$count++;
 				}
+				
 			}
+			if (stripos($page->ContentSearch, $data['Keywords']) !== false) {
+				$count++;
+			}
+			
 
 			if ($count>0){
 				$results->push(new ArrayData(
