@@ -91,11 +91,6 @@ public function SearchFormSubmit($data, $form) {
 		}
 		$results = new ArrayList();
 
-
-		//$array = array( 'ContentSearch:PartialMatch' => $partialmatchArray );
-		//$pages = Versioned::get_by_stage('Page','Live')->filter( $array );
-
-
 		foreach ($rank as $value => $key) {
 
 			$page = Versioned::get_by_stage('Page','Live')->filter('ID', $value)->first();
@@ -107,8 +102,9 @@ public function SearchFormSubmit($data, $form) {
 							'Title' => $page->Title,
 							'Link' => $page->Link(),
 							'Rank' => $rank[$value],
-						)
-					));
+						)	
+					)
+				);
 
 			}
 		}
