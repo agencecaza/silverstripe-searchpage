@@ -68,46 +68,48 @@ class SearchPageController extends PageController {
 	}
 
 
-	public function SearchFormSubmit($data, $form) {
+public function SearchFormSubmit($data, $form) {
 
-		$partialmatchArray=array();
+
+		$rank[0] = 0;
 
 		$keywords = explode(" ", $data['Keywords']);
 
-		foreach ($keywords as $k => $val) {
-			array_push($partialmatchArray, $val);
-		}
+		foreach ($keywords as $value => $val) {
 
+			$pages = Versioned::get_by_stage('Page','Live')->filter('ContentSearch:PartialMatch:nocase', $val);
+
+			if ($pages) {
+				foreach ($pages as $page) {
+
+					if ($page) {
+						if (!isset($rank[$page->ID])) { $rank[$page->ID]=0; }
+						$rank[$page->ID] ++;
+					}
+				}
+			}
+		}
 		$results = new ArrayList();
 
-		
-		
-		$array = array( 'ContentSearch:PartialMatch' => $partialmatchArray );
-		$pages = Versioned::get_by_stage('Page','Live')->filter( $array );
 
-		foreach ($pages as $page) {
+		//$array = array( 'ContentSearch:PartialMatch' => $partialmatchArray );
+		//$pages = Versioned::get_by_stage('Page','Live')->filter( $array );
 
-			$count=0;
 
-			foreach ($partialmatchArray as $string) {
-				if (stripos($page->ContentSearch, $string) !== false) {
-					$count++;
-				}
-				
-			}
-			if (stripos($page->ContentSearch, $data['Keywords']) !== false) {
-				$count++;
-			}
-			
+		foreach ($rank as $value => $key) {
 
-			if ($count>0){
-				$results->push(new ArrayData(
-					array(
-						'Title' => $page->Title,
-						'Link' => $page->Link(),
-						'Rank' => $count
-					)
-				));
+			$page = Versioned::get_by_stage('Page','Live')->filter('ID', $value)->first();
+
+			if ($page) {
+				$results->push(
+					ArrayData::create(
+						array(
+							'Title' => $page->Title,
+							'Link' => $page->Link(),
+							'Rank' => $rank[$value],
+						)
+					));
+
 			}
 		}
 
