@@ -77,8 +77,14 @@ public function SearchFormSubmit($data, $form) {
 
 		foreach ($keywords as $value => $val) {
 
-			$pages = Versioned::get_by_stage('Page','Live')->filter('ContentSearch:PartialMatch:nocase', $val);
-
+			$pages = Versioned::get_by_stage('Page','Live')->filterAny(
+				array(
+					'Title:PartialMatch:nocase' => $val,
+					'Content:PartialMatch:nocase' => $val,
+					'ContentSearch:PartialMatch:nocase' => $val,
+				)
+			);
+			
 			if ($pages) {
 				foreach ($pages as $page) {
 
