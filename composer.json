@@ -1,5 +1,5 @@
 {
-    "name": "intwebg/silverstripe-searchpage",
+    "name": "agencecaza/silverstripe-searchpage",
     "description": "Simple search engine",
     "type": "silverstripe-vendormodule",
     "keywords": ["silverstripe", "search"],
@@ -7,7 +7,7 @@
     "authors": [
     {
         "name": "Stéphane Guevremont",
-        "email": "stephane.guevremont@gmail.com"
+        "email": "stephane@agencecaza.ca"
     }],
     "require": {
         "silverstripe/cms": "^4",
@@ -15,7 +15,7 @@
     },
     "autoload": {
       "psr-4": {
-          "intwebg\\searchpage\\": "src/"
+          "agencecaza\\searchpage\\": "src/"
       }
     },
     "extra": {
