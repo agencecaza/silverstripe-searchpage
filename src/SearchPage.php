@@ -76,6 +76,7 @@ public function SearchFormSubmit($data, $form) {
 			" he ",
 			" she ",
 			" us ",
+			" we ",
 			" your ",
 			" they ",
 		);
