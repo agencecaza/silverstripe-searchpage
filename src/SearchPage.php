@@ -20,32 +20,7 @@ class SearchPageController extends PageController {
 
 	private static $allowed_actions = array (
 		'SearchForm'
-	);
-
-	
-	
-	protected function init()
-	{
-		parent::init();
-
-			if (isset($_GET['job']) == 'indexcontent') {
-			if (Member::currentUser() && Member::currentUser()->inGroup(2)) {
-				$pages = Page::get();
-				foreach ($pages as $page) {
-					$page->ContentSearch = $page->Title." ".$page->MenuTitle." ".$page->Content;
-					$page->write();
-					$page->publish('Stage', 'Live');
-				}
-				echo _t('SearchPage.JOBDONE',"The index Title and Content inside ContentSearch is done.");
-				exit;
-			} else {
-				echo _t('SearchPage.JOBCANTDOACTION',"You can't do this operation. You must be loggued as administrator.");
-				exit;
-			}
-		}
-	}
-
-	
+	);	
 	
 	public function SearchForm() {
 
@@ -73,7 +48,39 @@ public function SearchFormSubmit($data, $form) {
 
 		$rank[0] = 0;
 
-		$keywords = explode(" ", $data['Keywords']);
+		// remove articles from keywords
+		$strings = array(
+			" un ",
+			" une ",
+			" des ",
+			" le ",
+			" la ",
+			" les ",
+			" de ",
+			" à ",
+			" au ",
+			" aux ",
+			" a ",
+			" an ",
+			" them ",
+			" our ",
+			" yours ",
+			" je ",
+			" tu ",
+			" il ",
+			" nous ",
+			" vous ",
+			" ils ",
+			" I ",
+			" you ",
+			" he ",
+			" she ",
+			" us ",
+			" your ",
+			" they ",
+		);
+	
+		$keywords = explode(" ", str_replace($strings, "", $data['Keywords']));
 
 		foreach ($keywords as $value => $val) {
 
