@@ -48,37 +48,8 @@ public function SearchFormSubmit($data, $form) {
 
 		$rank[0] = 0;
 
-		// remove articles from keywords
 		$strings = array(
-			" un ",
-			" une ",
-			" des ",
-			" le ",
-			" la ",
-			" les ",
-			" de ",
-			" à ",
-			" au ",
-			" aux ",
-			" a ",
-			" an ",
-			" them ",
-			" our ",
-			" yours ",
-			" je ",
-			" tu ",
-			" il ",
-			" nous ",
-			" vous ",
-			" ils ",
-			" I ",
-			" you ",
-			" he ",
-			" she ",
-			" us ",
-			" we ",
-			" your ",
-			" they ",
+		
 		);
 	
 		$keywords = explode(" ", str_replace($strings, "", $data['Keywords']));
