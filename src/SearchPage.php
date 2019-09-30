@@ -20,8 +20,8 @@ class SearchPageController extends PageController {
 
 	private static $allowed_actions = array (
 		'SearchForm'
-	);	
-	
+	);
+
 	public function SearchForm() {
 
 		$form = Form::create(
@@ -49,9 +49,33 @@ public function SearchFormSubmit($data, $form) {
 		$rank[0] = 0;
 
 		$strings = array(
-		
 		);
-	
+
+		/*
+		*	Check if exist a perfect match and add a first rank
+		*
+		*/
+		$pages = Versioned::get_by_stage('Page','Live')->filterAny(
+			array(
+				'Title:PartialMatch:nocase' => $data['Keywords'],
+				'Content:PartialMatch:nocase' => $data['Keywords'],
+				'ContentSearch:PartialMatch:nocase' => $data['Keywords'],
+			)
+		);
+		if ($pages) {
+			foreach ($pages as $page) {
+				if ($page) {
+					if (!isset($rank[$page->ID])) { $rank[$page->ID]=0; }
+					$rank[$page->ID] ++;
+				}
+			}
+		}
+
+		/*
+		*	Check every words submitted
+		*
+		*/
+
 		$keywords = explode(" ", str_replace($strings, "", $data['Keywords']));
 
 		foreach ($keywords as $value => $val) {
@@ -63,7 +87,7 @@ public function SearchFormSubmit($data, $form) {
 					'ContentSearch:PartialMatch:nocase' => $val,
 				)
 			);
-			
+
 			if ($pages) {
 				foreach ($pages as $page) {
 
@@ -74,11 +98,16 @@ public function SearchFormSubmit($data, $form) {
 				}
 			}
 		}
+
+		/*
+		* Check pages add per rank.
+		*
+		*/
 		$results = new ArrayList();
 
 		foreach ($rank as $value => $key) {
 
-			$page = Versioned::get_by_stage('Page','Live')->filter('ID', $value)->first();
+			$page = Versioned::get_by_stage('Page','Live')->exclude('ClassName','SilverStripe\ErrorPage\ErrorPage')->filter('ID', $value)->first();
 
 			if ($page) {
 				$results->push(
@@ -87,23 +116,31 @@ public function SearchFormSubmit($data, $form) {
 							'Title' => $page->Title,
 							'Link' => $page->Link(),
 							'Rank' => $rank[$value],
-						)	
+						)
 					)
 				);
-
 			}
 		}
 
+		/*
+		* Sort higher is the score on top.
+		*
+		*/
 		$resultslist = $results->sort('Rank')->reverse();
 
-		$paginatedProperties = PaginatedList::create(
-       		$resultslist,
-       		$this->getRequest()
-    		)->setPageLength(25);
 
-    		return array (
-       			'Results' => $paginatedProperties
-    		);
+		/*
+		* Create a paginated pages results
+		*
+		*/
+		$paginatedProperties = PaginatedList::create(
+   		$resultslist,
+   		$this->getRequest()
+		)->setPageLength(25);
+
+		return array (
+			'Results' => $paginatedProperties
+		);
 
 	}
 
@@ -116,7 +153,5 @@ public function SearchFormSubmit($data, $form) {
 	public function KeywordsGet() {
 		return $_GET['Keywords'];
 	}
-
-
 
 }
