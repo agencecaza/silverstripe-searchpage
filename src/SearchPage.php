@@ -59,13 +59,15 @@ class SearchPageController extends PageController
                 'ContentSearch:PartialMatch:nocase' => $data['Keywords'],
             )
         );
-        if ($pages) {
-            foreach ($pages as $page) {
-                if ($page) {
-                    if (!isset($rank[$page->ID])) {
-                        $rank[$page->ID]=0;
+        if (strlen($data['Keywords']) > 2) {
+            if ($pages) {
+                foreach ($pages as $page) {
+                    if ($page) {
+                        if (!isset($rank[$page->ID])) {
+                            $rank[$page->ID]=0;
+                        }
+                        $rank[$page->ID] ++;
                     }
-                    $rank[$page->ID] ++;
                 }
             }
         }
@@ -78,7 +80,6 @@ class SearchPageController extends PageController
 
         foreach ($keywords as $value => $val) {
             if (strlen($val) > 2) {
-
                 $pages = Versioned::get_by_stage('Page', 'Live')->filterAny(
                     array(
                         'Title:PartialMatch:nocase' => $val,
@@ -127,6 +128,7 @@ class SearchPageController extends PageController
         *
         */
         $resultslist = $results->sort('Rank')->reverse();
+
 
 
         /*
